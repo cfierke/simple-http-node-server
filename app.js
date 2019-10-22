@@ -3,10 +3,13 @@ const fs = require('fs');
 const port = 3000;
 
 const requestHandler = (request, response) => {
-  fs.writeFile('/hello-world.txt', 'Hello to this great world', 'utf8', (err) => {
-		if(err)throw err
-  });
-  response.end(`File hello-world written to server`)
+  response.end(`Handling a request on port ${port}`)
+  try {
+    fs.writeFileSync('hello-world.txt', 'Hello to this great world', 'utf8');
+    console.log('File written successfully');
+  } catch (err) {
+    console.log(JSON.stringify(err));
+  }
 };
 
 const server = http.createServer(requestHandler);
